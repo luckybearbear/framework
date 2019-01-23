@@ -16,7 +16,7 @@ import java.security.SecureRandom;
  * @auther zj
  * @create 2019-01-23 10:43
  */
-public class AESUntil {
+public class AESUtil {
     private static final String ENCODE_RULES = "zj";
     /**
      * 加密
