@@ -331,7 +331,7 @@
     </dependencies>
 
     <build>
-        <finalName>zheng-common</finalName>
+        <finalName>framework-common</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
