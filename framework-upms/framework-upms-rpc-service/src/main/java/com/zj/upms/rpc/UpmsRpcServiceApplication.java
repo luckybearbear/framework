@@ -6,7 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * 服务启动类
- * Created by ZhangShuzheng on 2017/2/3.
+ * Created by Zhangzj on 2017/2/3.
  */
 public class UpmsRpcServiceApplication {
 
