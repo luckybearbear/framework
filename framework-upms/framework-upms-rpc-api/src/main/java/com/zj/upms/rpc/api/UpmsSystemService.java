@@ -9,5 +9,11 @@ import com.zj.upms.dao.model.UpmsSystemExample;
 * Created by zj on 2019/1/24.
 */
 public interface UpmsSystemService extends BaseService<UpmsSystem, UpmsSystemExample> {
+    /**
+     * 根据name获取UpmsSystem
+     * @param name
+     * @return
+     */
+    UpmsSystem selectUpmsSystemByName(String name);
 
 }

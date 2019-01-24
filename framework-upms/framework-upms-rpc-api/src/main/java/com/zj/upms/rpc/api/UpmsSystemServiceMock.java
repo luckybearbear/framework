@@ -10,5 +10,8 @@ import com.zj.upms.dao.model.UpmsSystemExample;
 * Created by zj on 2019/1/24.
 */
 public class UpmsSystemServiceMock extends BaseServiceMock<UpmsSystemMapper, UpmsSystem, UpmsSystemExample> implements UpmsSystemService {
-
+    @Override
+    public UpmsSystem selectUpmsSystemByName(String name) {
+        return null;
+    }
 }
