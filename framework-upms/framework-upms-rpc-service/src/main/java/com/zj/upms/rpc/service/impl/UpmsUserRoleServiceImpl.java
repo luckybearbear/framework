@@ -1,7 +1,7 @@
 package com.zj.upms.rpc.service.impl;
 
-import com.zheng.common.annotation.BaseService;
-import com.zheng.common.base.BaseServiceImpl;
+import com.zj.common.annotation.BaseService;
+import com.zj.common.base.BaseServiceImpl;
 import com.zj.upms.dao.mapper.UpmsUserRoleMapper;
 import com.zj.upms.dao.model.UpmsUserRole;
 import com.zj.upms.dao.model.UpmsUserRoleExample;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
 * UpmsUserRoleService实现
-* Created by shuzheng on 2019/1/24.
+* Created by zj on 2019/1/24.
 */
 @Service
 @Transactional
