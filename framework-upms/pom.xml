@@ -17,6 +17,7 @@
         <module>framework-upms-dao</module>
         <module>framework-upms-rpc-api</module>
         <module>framework-upms-rpc-service</module>
+        <module>framework-upms-server</module>
     </modules>
 
 
