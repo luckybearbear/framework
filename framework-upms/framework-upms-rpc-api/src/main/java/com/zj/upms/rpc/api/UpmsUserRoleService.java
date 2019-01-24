@@ -9,5 +9,12 @@ import com.zj.upms.dao.model.UpmsUserRoleExample;
 * Created by zj on 2019/1/24.
 */
 public interface UpmsUserRoleService extends BaseService<UpmsUserRole, UpmsUserRoleExample> {
+    /**
+     * 用户角色
+     * @param roleIds 角色ids
+     * @param id 用户id
+     * @return
+     */
+    int role(String[] roleIds, int id);
 
 }

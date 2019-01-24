@@ -1,5 +1,6 @@
 package com.zj.upms.rpc.api;
 
+import com.alibaba.fastjson.JSONArray;
 import com.zj.common.base.BaseServiceMock;
 import com.zj.upms.dao.mapper.UpmsPermissionMapper;
 import com.zj.upms.dao.model.UpmsPermission;
@@ -11,4 +12,13 @@ import com.zj.upms.dao.model.UpmsPermissionExample;
 */
 public class UpmsPermissionServiceMock extends BaseServiceMock<UpmsPermissionMapper, UpmsPermission, UpmsPermissionExample> implements UpmsPermissionService {
 
+    @Override
+    public JSONArray getTreeByRoleId(Integer roleId) {
+        return null;
+    }
+
+    @Override
+    public JSONArray getTreeByUserId(Integer usereId, Byte type) {
+        return null;
+    }
 }

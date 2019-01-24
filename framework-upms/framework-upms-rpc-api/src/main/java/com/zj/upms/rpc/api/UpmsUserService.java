@@ -9,5 +9,6 @@ import com.zj.upms.dao.model.UpmsUserExample;
 * Created by zj on 2019/1/24.
 */
 public interface UpmsUserService extends BaseService<UpmsUser, UpmsUserExample> {
+    UpmsUser createUser(UpmsUser upmsUser);
 
 }

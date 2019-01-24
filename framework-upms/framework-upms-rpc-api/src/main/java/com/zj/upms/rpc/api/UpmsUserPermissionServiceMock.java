@@ -1,5 +1,6 @@
 package com.zj.upms.rpc.api;
 
+import com.alibaba.fastjson.JSONArray;
 import com.zj.common.base.BaseServiceMock;
 import com.zj.upms.dao.mapper.UpmsUserPermissionMapper;
 import com.zj.upms.dao.model.UpmsUserPermission;
@@ -11,4 +12,8 @@ import com.zj.upms.dao.model.UpmsUserPermissionExample;
 */
 public class UpmsUserPermissionServiceMock extends BaseServiceMock<UpmsUserPermissionMapper, UpmsUserPermission, UpmsUserPermissionExample> implements UpmsUserPermissionService {
 
+    @Override
+    public int permission(JSONArray datas, int id) {
+        return 0;
+    }
 }
