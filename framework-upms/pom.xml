@@ -2,15 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>framework</artifactId>
-        <groupId>com.zj</groupId>
-        <version>1.0.0</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    
+    <groupId>com.zj</groupId>
     <artifactId>framework-upms</artifactId>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
+
+    <name>framework-upms</name>
+    <url>http://www.example.cn</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
+    </properties>
+
     <modules>
         <module>framework-upms-client</module>
         <module>framework-upms-common</module>
