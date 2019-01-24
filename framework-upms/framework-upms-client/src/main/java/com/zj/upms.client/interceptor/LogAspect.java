@@ -27,7 +27,7 @@ import java.lang.reflect.Method;
 
 /**
  * 日志记录AOP实现
- * Created by Zhangzj on 2017/3/14.
+ * Created by zj on 2017/3/14.
  */
 @Aspect
 public class LogAspect {

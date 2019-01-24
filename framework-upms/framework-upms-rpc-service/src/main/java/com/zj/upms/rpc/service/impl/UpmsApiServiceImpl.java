@@ -67,7 +67,7 @@ public class UpmsApiServiceImpl implements UpmsApiService {
      * @return
      */
     @Override
-    @Cacheable(value = "zheng-upms-rpc-service-ehcache", key = "'selectUpmsPermissionByUpmsUserId_' + #upmsUserId")
+    @Cacheable(value = "framework-upms-rpc-service-ehcache", key = "'selectUpmsPermissionByUpmsUserId_' + #upmsUserId")
     public List<UpmsPermission> selectUpmsPermissionByUpmsUserIdByCache(Integer upmsUserId) {
         return selectUpmsPermissionByUpmsUserId(upmsUserId);
     }
@@ -95,7 +95,7 @@ public class UpmsApiServiceImpl implements UpmsApiService {
      * @return
      */
     @Override
-    @Cacheable(value = "zheng-upms-rpc-service-ehcache", key = "'selectUpmsRoleByUpmsUserId_' + #upmsUserId")
+    @Cacheable(value = "framework-upms-rpc-service-ehcache", key = "'selectUpmsRoleByUpmsUserId_' + #upmsUserId")
     public List<UpmsRole> selectUpmsRoleByUpmsUserIdByCache(Integer upmsUserId) {
         return selectUpmsRoleByUpmsUserId(upmsUserId);
     }

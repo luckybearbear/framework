@@ -23,15 +23,15 @@ public class FrameworkAdminUtil implements InitializingBean, ServletContextAware
 
     @Override
     public void setServletContext(ServletContext servletContext) {
-        LOGGER.info("===== 开始解压zheng-admin =====");
-        String version = PropertiesFileUtil.getInstance("zheng-admin-client").get("zheng.admin.version");
-        LOGGER.info("zheng-admin.jar 版本: {}", version);
-        String jarPath = servletContext.getRealPath("/WEB-INF/lib/zheng-admin-" + version + ".jar");
-        LOGGER.info("zheng-admin.jar 包路径: {}", jarPath);
-        String resources = servletContext.getRealPath("/") + "/resources/zheng-admin";
-        LOGGER.info("zheng-admin.jar 解压到: {}", resources);
+        LOGGER.info("===== 开始解压framework-admin =====");
+        String version = PropertiesFileUtil.getInstance("framework-admin-client").get("framework.admin.version");
+        LOGGER.info("framework-admin.jar 版本: {}", version);
+        String jarPath = servletContext.getRealPath("/WEB-INF/lib/framework-admin-" + version + ".jar");
+        LOGGER.info("framework-admin.jar 包路径: {}", jarPath);
+        String resources = servletContext.getRealPath("/") + "/resources/framework-admin";
+        LOGGER.info("framework-admin.jar 解压到: {}", resources);
         JarUtil.decompress(jarPath, resources);
-        LOGGER.info("===== 解压zheng-admin完成 =====");
+        LOGGER.info("===== 解压framework-admin完成 =====");
     }
 
 }

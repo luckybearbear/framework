@@ -45,9 +45,9 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(UpmsAuthenticationFilter.class);
 
     // 局部会话key
-    private final static String ZHENG_UPMS_CLIENT_SESSION_ID = "zheng-upms-client-session-id";
+    private final static String FRAMEWORK_UPMS_CLIENT_SESSION_ID = "framework-upms-client-session-id";
     // 单点同一个code所有局部会话key
-    private final static String ZHENG_UPMS_CLIENT_SESSION_IDS = "zheng-upms-client-session-ids";
+    private final static String FRAMEWORK_UPMS_CLIENT_SESSION_IDS = "framework-upms-client-session-ids";
 
     @Autowired
     UpmsSessionDao upmsSessionDao;
@@ -57,7 +57,7 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
         Subject subject = getSubject(request, response);
         Session session = subject.getSession();
         // 判断请求类型
-        String upmsType = PropertiesFileUtil.getInstance("zheng-upms-client").get("zheng.upms.type");
+        String upmsType = PropertiesFileUtil.getInstance("framework-upms-client").get("framework.upms.type");
         session.setAttribute(UpmsConstant.UPMS_TYPE, upmsType);
         if ("client".equals(upmsType)) {
             return validateClient(request, response);
@@ -70,14 +70,14 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        StringBuffer ssoServerUrl = new StringBuffer(PropertiesFileUtil.getInstance("zheng-upms-client").get("zheng.upms.sso.server.url"));
+        StringBuffer ssoServerUrl = new StringBuffer(PropertiesFileUtil.getInstance("framework-upms-client").get("framework.upms.sso.server.url"));
         // server需要登录
-        String upmsType = PropertiesFileUtil.getInstance("zheng-upms-client").get("zheng.upms.type");
+        String upmsType = PropertiesFileUtil.getInstance("framework-upms-client").get("framework.upms.type");
         if ("server".equals(upmsType)) {
             WebUtils.toHttp(response).sendRedirect(ssoServerUrl.append("/sso/login").toString());
             return false;
         }
-        ssoServerUrl.append("/sso/index").append("?").append("appid").append("=").append(PropertiesFileUtil.getInstance("zheng-upms-client").get("zheng.upms.appID"));
+        ssoServerUrl.append("/sso/index").append("?").append("appid").append("=").append(PropertiesFileUtil.getInstance("framework-upms-client").get("framework.upms.appID"));
         // 回跳地址
         HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
         StringBuffer backurl = httpServletRequest.getRequestURL();
@@ -100,12 +100,12 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
         String sessionId = session.getId().toString();
         int timeOut = (int) session.getTimeout() / 1000;
         // 判断局部会话是否登录
-        String cacheClientSession = RedisUtil.get(ZHENG_UPMS_CLIENT_SESSION_ID + "_" + session.getId());
+        String cacheClientSession = RedisUtil.get(FRAMEWORK_UPMS_CLIENT_SESSION_ID + "_" + session.getId());
         if (StringUtils.isNotBlank(cacheClientSession)) {
             // 更新code有效期
-            RedisUtil.set(ZHENG_UPMS_CLIENT_SESSION_ID + "_" + sessionId, cacheClientSession, timeOut);
+            RedisUtil.set(FRAMEWORK_UPMS_CLIENT_SESSION_ID + "_" + sessionId, cacheClientSession, timeOut);
             Jedis jedis = RedisUtil.getJedis();
-            jedis.expire(ZHENG_UPMS_CLIENT_SESSION_IDS + "_" + cacheClientSession, timeOut);
+            jedis.expire(FRAMEWORK_UPMS_CLIENT_SESSION_IDS + "_" + cacheClientSession, timeOut);
             jedis.close();
             // 移除url中的code参数
             if (null != request.getParameter("code")) {
@@ -126,7 +126,7 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
         if (StringUtils.isNotBlank(code)) {
             // HttpPost去校验code
             try {
-                StringBuffer ssoServerUrl = new StringBuffer(PropertiesFileUtil.getInstance("zheng-upms-client").get("zheng.upms.sso.server.url"));
+                StringBuffer ssoServerUrl = new StringBuffer(PropertiesFileUtil.getInstance("framework-upms-client").get("framework.upms.sso.server.url"));
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(ssoServerUrl.toString() + "/sso/code");
 
@@ -140,10 +140,10 @@ public class UpmsAuthenticationFilter extends AuthenticationFilter {
                     JSONObject result = JSONObject.parseObject(EntityUtils.toString(httpEntity));
                     if (1 == result.getIntValue("code") && result.getString("data").equals(code)) {
                         // code校验正确，创建局部会话
-                        RedisUtil.set(ZHENG_UPMS_CLIENT_SESSION_ID + "_" + sessionId, code, timeOut);
+                        RedisUtil.set(FRAMEWORK_UPMS_CLIENT_SESSION_ID + "_" + sessionId, code, timeOut);
                         // 保存code对应的局部会话sessionId，方便退出操作
-                        RedisUtil.sadd(ZHENG_UPMS_CLIENT_SESSION_IDS + "_" + code, sessionId, timeOut);
-                        LOGGER.debug("当前code={}，对应的注册系统个数：{}个", code, RedisUtil.getJedis().scard(ZHENG_UPMS_CLIENT_SESSION_IDS + "_" + code));
+                        RedisUtil.sadd(FRAMEWORK_UPMS_CLIENT_SESSION_IDS + "_" + code, sessionId, timeOut);
+                        LOGGER.debug("当前code={}，对应的注册系统个数：{}个", code, RedisUtil.getJedis().scard(FRAMEWORK_UPMS_CLIENT_SESSION_IDS + "_" + code));
                         // 移除url中的token参数
                         String backUrl = RequestParameterUtil.getParameterWithOutCode(WebUtils.toHttp(request));
                         // 返回请求资源
