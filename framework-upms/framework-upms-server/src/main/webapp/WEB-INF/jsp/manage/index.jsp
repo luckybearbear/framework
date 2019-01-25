@@ -215,7 +215,7 @@ ${upmsSystem.name}
 
 		<li class="pull-right">
 			<ul class="hi-menu">
-				<li class="dropdown">
+				<li  style="color: white">
 					${upmsUser.realname}，您好！
 				</li>
 				<!-- 搜索 -->
