@@ -11,7 +11,8 @@
   <modules>
     <module>framework-common</module>
     <module>framework-admin</module>
-      <module>framework-upms</module>
+    <module>framework-upms</module>
+    <module>framework-cms</module>
   </modules>
 
   <name>framework</name>

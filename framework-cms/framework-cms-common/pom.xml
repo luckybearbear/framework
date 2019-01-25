@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>framework-cms</artifactId>
+        <groupId>com.zj</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>framework-cms-common</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.zj</groupId>
+            <artifactId>framework-common</artifactId>
+            <version>1.0.0</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>framework-cms-common</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <!--主要用来替换项目中的资源文件（*.xml、*.properties）当中的${...}，比如${db.url}，那么如果配置了db.url=aaa的话，在项目编译的时候，就会自动的把${db.url}替换为aaa，下面以实例来讲解一下-->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
