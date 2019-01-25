@@ -9,7 +9,7 @@
 
     <dubbo:application name="framework-upms-server"/>
 
-    <dubbo:registry file="./framework-upms-server-dubbo.cache" address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:registry file="./framework-upms-server-dubbo.cache" address="zookeeper://zkserver"/>
 
     <!-- 订阅服务 -->
     <dubbo:consumer check="false"/>

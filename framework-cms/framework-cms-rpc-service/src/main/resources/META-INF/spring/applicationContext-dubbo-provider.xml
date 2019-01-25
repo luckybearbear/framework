@@ -9,7 +9,7 @@
 
     <dubbo:application name="framework-cms-rpc-service"/>
 
-    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:registry address="zookeeper://zkserver"/>
 
     <dubbo:protocol name="dubbo" port="20882"/>
 
