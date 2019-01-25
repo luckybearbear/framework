@@ -21,11 +21,179 @@
 	<link href="${basePath}/resources/framework-admin/css/admin.css" rel="stylesheet"/>
 	<style>
 		/** skins **/
-		<c:forEach var="upmsSystem" items="${upmsSystems}">
-		#${upmsSystem.name} #header {background: ${upmsSystem.theme};}
-		#${upmsSystem.name} .content_tab{background: ${upmsSystem.theme};}
-		#${upmsSystem.name} .s-profile>a{background: url(${basePath}${upmsSystem.banner}) left top no-repeat;}
-		</c:forEach>
+		/**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<c:forEach var="upmsSystem" items="${upmsSystems}">               **/
+		/** #
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+${upmsSystem.name}
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                  #heade {background:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ${upmsSystem.theme}               ;}**/
+		/** #
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+${upmsSystem.name}
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                  .content_ta{background:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ${upmsSystem.theme}               ;}**/
+		/** #
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+${upmsSystem.name}
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                  .s-profile>a{background: url(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ${basePath}${upmsSystem.banner}               ) left top no-repeat;}**/
+		/**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</c:forEach>               **/
+
+		.over {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 	</style>
 </head>
 <body>
@@ -40,12 +208,16 @@
 		</li>
 		<li id="logo" class="hidden-xs">
 			<a href="${basePath}/manage/index">
-				<img src="${basePath}/resources/framework-admin/images/logo.png"/>
+				<%--<img src="${basePath}/resources/framework-admin/images/logo.png"/>--%>
 			</a>
 			<span id="system_title">权限管理系统</span>
 		</li>
+
 		<li class="pull-right">
 			<ul class="hi-menu">
+				<li class="dropdown">
+					${upmsUser.realname}，您好！
+				</li>
 				<!-- 搜索 -->
 				<li class="dropdown">
 					<a class="waves-effect waves-light" data-toggle="dropdown" href="javascript:;">
@@ -78,6 +250,7 @@
 						</c:forEach>
 					</ul>
 				</li>
+
 				<li class="dropdown">
 					<a class="waves-effect waves-light" data-toggle="dropdown" href="javascript:;">
 						<i class="him-icon zmdi zmdi-more-vert"></i>
@@ -107,38 +280,17 @@
 <section id="main">
 	<!-- 左侧导航区 -->
 	<aside id="sidebar">
-		<!-- 个人资料区 -->
+		<!-- 资料区 -->
 		<div class="s-profile">
 			<a class="waves-effect waves-light" href="javascript:;">
 				<div class="sp-pic">
 					<img src="${basePath}${upmsUser.avatar}"/>
 				</div>
-				<div class="sp-info">
-					${upmsUser.realname}，您好！
-					<i class="zmdi zmdi-caret-down"></i>
-				</div>
 			</a>
-			<ul class="main-menu">
-				<li>
-					<a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-account"></i> 个人资料</a>
-				</li>
-				<li>
-					<a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-face"></i> 隐私管理</a>
-				</li>
-				<li>
-					<a class="waves-effect" href="javascript:;"><i class="zmdi zmdi-settings"></i> 系统设置</a>
-				</li>
-				<li>
-					<a class="waves-effect" href="${basePath}/sso/logout"><i class="zmdi zmdi-run"></i> 退出登录</a>
-				</li>
-			</ul>
 		</div>
 		<!-- /个人资料区 -->
 		<!-- 菜单区 -->
 		<ul class="main-menu">
-			<li>
-				<a class="waves-effect" href="javascript:Tab.addTab('首页', 'home');"><i class="zmdi zmdi-home"></i> 首页</a>
-			</li>
 			<c:forEach var="upmsPermission" items="${upmsPermissions}" varStatus="status">
 				<c:if test="${upmsPermission.pid == 0}">
 				<li class="sub-menu system_menus system_${upmsPermission.systemId} ${status.index}" <c:if test="${upmsPermission.systemId != 1}">style="display:none;"</c:if>>
@@ -158,7 +310,7 @@
 				</c:if>
 			</c:forEach>
 			<li>
-				<div class="upms-version">&copy; ZHENG-UPMS V1.0.0</div>
+				<div class="upms-version">&copy; FRAMEWORK-UPMS V1.0.0</div>
 			</li>
 		</ul>
 		<!-- /菜单区 -->
@@ -174,29 +326,95 @@
 			</div>
 			<ul id="tabs" class="tabs">
 				<li id="tab_home" data-index="home" data-closeable="false" class="cur">
-					<span class="waves-effect waves-light" href="javascript:;">首页</span>
+					<a class="waves-effect waves-light" href="javascript:;">首页</a>
 				</li>
 			</ul>
 		</div>
 		<div class="content_main">
-			<div id="iframe_home" class="iframe cur">
-				<p><h4>通用用户权限管理系统</h4></p>
-				<p><b>演示地址</b>：<a href="http://www.zhangshuzheng.cn/zhengAdmin" target="_blank">http://www.zhangshuzheng.cn/zhengAdmin</a></p>
-				<p><b>系统简介</b>：本系统是基于RBAC授权和基于用户授权的细粒度权限控制通用平台，并提供单点登录、会话管理和日志管理。接入的系统可自由定义组织、角色、权限、资源等。</p><br/>
-				<p><h4>系统功能概述：</h4></p>
-				<p><b>系统组织管理</b>：系统和组织增加、删除、修改、查询功能。</p>
-				<p><b>用户角色管理</b>：用户和角色增加、删除、修改、查询功能。</p>
-				<p><b>资源权限管理</b>：菜单和按钮增加、删除、修改、查询功能。</p>
-				<p><b>权限分配管理</b>：提供给角色和用户的权限增加、删除、修改、查询功能。</p>
-				<p><b>单点登录(SSO)</b>：提供统一用户单点登录认证、用户鉴权功能。</p>
-				<p><b>用户会话管理</b>：提供分布式用户会话管理</p>
-				<p><b>操作日志管理</b>：提供记录用户登录、操作等日志。</p><br/>
-				<p><h4>对外接口概述：</h4></p>
-				<p><b>系统组织数据接口</b>、<b>用户角色数据接口</b>、<b>资源权限数据接口</b>、<b>单点登录(SSO)接口</b>、<b>用户鉴权接口</b></p><br/>
-				<p><h4>关于作者</h4></p>
-				<p><b>姓　　名</b>：张恕征</p>
-				<p><b>电子邮箱</b>：469741414@qq.com</p>
-			</div>
+            <div id="iframe_home" class="iframe cur">
+                <style>
+                    .mod-app-item {
+                        overflow: hidden;
+                        padding: 0px;
+                    }
+                    .mod-app-item li {
+                        width: 112px;
+                        padding: 0 17px 5px 23px;
+                        float: left;
+                        height: 119px;
+                        _height: 129px;
+                        margin: 21px 0 0;
+                        text-align: center;
+                        display: inline;
+                    }
+                    .functions li{
+                        border-bottom: 1px dashed #b7b7b7;
+                    }
+                    .mod-app-item li:hover .app-name a,.mod-app-item .hover .app-name a {
+                        color: #8f3900
+                    }
+
+                    #iframe_home .app-img .shadow {
+                        width: 30px;
+                        height: 30px;
+                        margin: -32px 0 0;
+                        margin-top: -31px\9;
+                        *margin-top: -34px;
+                        background: url(../images/icon_mask_30.png) no-repeat;
+                        position: relative;
+                        z-index: 999
+                    }
+
+                    .mod-app-item .app-name {
+                        margin: 7px 0 6px;
+                        height: 20px;
+                        overflow: hidden
+                    }
+
+                    .mod-app-item .app-name a {
+                        line-height: 1.3;
+                        font-size: 12px
+                    }
+                </style>
+                <div style="border: 1px solid #e4e4e4;padding: 12px 15px 0;">
+                <h1 style="font-size:14px;border-bottom: 1px solid #e0e0e0;line-height: 1.2;margin: 0px;height: 25px;">功能模块</h1>
+                <ul class="mod-app-item daily-pick-ul">
+                    <li>
+                        <div class="app-img">
+                            <a href="javascript:void(0)" class="switch-systems" systemid="1" systemname="activiti-web" systemtitle="权限管理">
+                                <img src="${basePath}/resources/framework-admin/images/zheng-upms.png" width="72" height="72">
+                            </a>
+                        </div>
+                        <p class="app-name"><a href="javascript:void(0)" class="switch-systems" systemid="1" systemname="activiti-web" systemtitle="权限管理">权限管理</a></p>
+                    </li>
+                    <li>
+                        <div class="app-img">
+                            <a href="javascript:void(0)" class="switch-systems" systemid="2" systemname="activiti-web" systemtitle="内容管理">
+                                <img src="${basePath}/resources/framework-admin/images/zheng-cms.png" width="72" height="72">
+                            </a>
+                        </div>
+                        <p class="app-name"><a href="javascript:void(0)" class="switch-systems" systemid="2" systemname="activiti-web" systemtitle="内容管理">内容管理</a></p>
+                    </li>
+                    <li>
+                        <div class="app-img">
+                            <a href="javascript:void(0)" class="switch-systems" systemid="3" systemname="activiti-web" systemtitle="支付系统">
+                                <img src="${basePath}/resources/framework-admin/images/zheng-pay.png" width="72" height="72">
+                            </a>
+                        </div>
+                        <p class="app-name"><a href="javascript:void(0)" class="switch-systems" systemid="3" systemname="activiti-web" systemtitle="支付系统">支付系统</a></p>
+                    </li>
+                    <li>
+                        <div class="app-img">
+                            <a href="javascript:void(0)" class="switch-systems" systemid="4" systemname="activiti-web" systemtitle="用户管理系统">
+                                <img src="${basePath}/resources/framework-admin/images/zheng-ucenter.png" width="72" height="72">
+                            </a>
+                        </div>
+                        <p class="app-name"><a href="javascript:void(0)" class="switch-systems" systemid="4" systemname="activiti-web" systemtitle="用户管理系统">用户管理系统</a></p>
+                    </li>
+
+                </ul>
+            </div>
+            </div>
 		</div>
 	</section>
 </section>
