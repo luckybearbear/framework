@@ -36,8 +36,7 @@
             <artifactId>tbschedule</artifactId>
             <version>3.2.8-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/tbschedule-3.2.8-SNAPSHOT.jar
-            </systemPath>
+            <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/tbschedule-3.2.8-SNAPSHOT.jar</systemPath>
         </dependency>
         <!-- rocketmq -->
         <dependency>
