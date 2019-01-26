@@ -1,13 +1,13 @@
-package com.zj.cms.admin.controller;
+package com.zj.cms.admin.controller.manage;
 
 import com.baidu.unbiz.fluentvalidator.ComplexResult;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.zj.cms.common.constant.CmsResult;
 import com.zj.cms.common.constant.CmsResultConstant;
-import com.zj.cms.dao.model.CmsCategory;
-import com.zj.cms.dao.model.CmsCategoryExample;
-import com.zj.cms.rpc.api.CmsCategoryService;
+import com.zj.cms.dao.model.CmsPage;
+import com.zj.cms.dao.model.CmsPageExample;
+import com.zj.cms.rpc.api.CmsPageService;
 import com.zj.common.base.BaseController;
 import com.zj.common.validator.LengthValidator;
 import io.swagger.annotations.Api;
@@ -26,28 +26,28 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 类目控制器
+ * 单页控制器
  * Created by zj
  */
 @Controller
-@Api(value = "类目管理", description = "类目管理")
-@RequestMapping("/manage/category")
-public class CmsCategoryController extends BaseController {
+@Api(value = "单页管理", description = "单页管理")
+@RequestMapping("/manage/page")
+public class CmsPageController extends BaseController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CmsCategoryController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CmsPageController.class);
 	
 	@Autowired
-	private CmsCategoryService cmsCategoryService;
+	private CmsPageService cmsPageService;
 
-	@ApiOperation(value = "类目首页")
-	@RequiresPermissions("cms:category:read")
+	@ApiOperation(value = "评论首页")
+	@RequiresPermissions("cms:page:read")
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index() {
-		return "/manage/category/index.jsp";
+		return "/manage/page/index.jsp";
 	}
 
-	@ApiOperation(value = "类目列表")
-	@RequiresPermissions("cms:category:read")
+	@ApiOperation(value = "评论列表")
+	@RequiresPermissions("cms:page:read")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	public Object list(
@@ -55,76 +55,76 @@ public class CmsCategoryController extends BaseController {
 			@RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
 			@RequestParam(required = false, value = "sort") String sort,
 			@RequestParam(required = false, value = "order") String order) {
-		CmsCategoryExample cmsCategoryExample = new CmsCategoryExample();
+		CmsPageExample cmsPageExample = new CmsPageExample();
 		if (!StringUtils.isBlank(sort) && !StringUtils.isBlank(order)) {
-			cmsCategoryExample.setOrderByClause(sort + " " + order);
+			cmsPageExample.setOrderByClause(sort + " " + order);
 		}
-		List<CmsCategory> rows = cmsCategoryService.selectByExampleForOffsetPage(cmsCategoryExample, offset, limit);
-		long total = cmsCategoryService.countByExample(cmsCategoryExample);
+		List<CmsPage> rows = cmsPageService.selectByExampleForOffsetPage(cmsPageExample, offset, limit);
+		long total = cmsPageService.countByExample(cmsPageExample);
 		Map<String, Object> result = new HashMap<>(2);
 		result.put("rows", rows);
 		result.put("total", total);
 		return result;
 	}
 
-	@ApiOperation(value = "新增类目")
-	@RequiresPermissions("cms:category:create")
+	@ApiOperation(value = "新增单页")
+	@RequiresPermissions("cms:page:create")
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create() {
-		return "/manage/category/create.jsp";
+		return "/manage/page/create.jsp";
 	}
 
-	@ApiOperation(value = "新增类目")
-	@RequiresPermissions("cms:category:create")
+	@ApiOperation(value = "新增单页")
+	@RequiresPermissions("cms:page:create")
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	@ResponseBody
-	public Object create(CmsCategory cmsCategory) {
+	public Object create(CmsPage cmsPage) {
 		ComplexResult result = FluentValidator.checkAll()
-				.on(cmsCategory.getName(), new LengthValidator(1, 20, "名称"))
+				.on(cmsPage.getTitle(), new LengthValidator(1, 20, "标题"))
 				.doValidate()
 				.result(ResultCollectors.toComplex());
 		if (!result.isSuccess()) {
 			return new CmsResult(CmsResultConstant.INVALID_LENGTH, result.getErrors());
 		}
 		long time = System.currentTimeMillis();
-		cmsCategory.setCtime(time);
-		cmsCategory.setOrders(time);
-		int count = cmsCategoryService.insertSelective(cmsCategory);
+		cmsPage.setCtime(time);
+		cmsPage.setOrders(time);
+		int count = cmsPageService.insertSelective(cmsPage);
 		return new CmsResult(CmsResultConstant.SUCCESS, count);
 	}
 
-	@ApiOperation(value = "删除类目")
-	@RequiresPermissions("cms:category:delete")
+	@ApiOperation(value = "删除单页")
+	@RequiresPermissions("cms:page:delete")
 	@RequestMapping(value = "/delete/{ids}",method = RequestMethod.GET)
 	@ResponseBody
 	public Object delete(@PathVariable("ids") String ids) {
-		int count = cmsCategoryService.deleteByPrimaryKeys(ids);
+		int count = cmsPageService.deleteByPrimaryKeys(ids);
 		return new CmsResult(CmsResultConstant.SUCCESS, count);
 	}
 
-	@ApiOperation(value = "修改类目")
-	@RequiresPermissions("cms:category:update")
+	@ApiOperation(value = "修改单页")
+	@RequiresPermissions("cms:page:update")
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String update(@PathVariable("id") int id, ModelMap modelMap) {
-		CmsCategory category = cmsCategoryService.selectByPrimaryKey(id);
-		modelMap.put("category", category);
-		return "/manage/category/update.jsp";
+		CmsPage page = cmsPageService.selectByPrimaryKey(id);
+		modelMap.put("page", page);
+		return "/manage/page/update.jsp";
 	}
 
-	@ApiOperation(value = "修改类目")
-	@RequiresPermissions("cms:category:update")
+	@ApiOperation(value = "修改单页")
+	@RequiresPermissions("cms:page:update")
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Object update(@PathVariable("id") int id, CmsCategory cmsCategory) {
+	public Object update(@PathVariable("id") int id, CmsPage cmsPage) {
 		ComplexResult result = FluentValidator.checkAll()
-				.on(cmsCategory.getName(), new LengthValidator(1, 20, "名称"))
+				.on(cmsPage.getTitle(), new LengthValidator(1, 20, "标题"))
 				.doValidate()
 				.result(ResultCollectors.toComplex());
 		if (!result.isSuccess()) {
 			return new CmsResult(CmsResultConstant.INVALID_LENGTH, result.getErrors());
 		}
-		cmsCategory.setCategoryId(id);
-		int count = cmsCategoryService.updateByPrimaryKeySelective(cmsCategory);
+		cmsPage.setPageId(id);
+		int count = cmsPageService.updateByPrimaryKeySelective(cmsPage);
 		return new CmsResult(CmsResultConstant.SUCCESS, count);
 	}
 

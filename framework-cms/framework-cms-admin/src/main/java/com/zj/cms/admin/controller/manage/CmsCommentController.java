@@ -1,4 +1,4 @@
-package com.zj.cms.admin.controller;
+package com.zj.cms.admin.controller.manage;
 
 import com.zj.cms.common.constant.CmsResult;
 import com.zj.cms.common.constant.CmsResultConstant;

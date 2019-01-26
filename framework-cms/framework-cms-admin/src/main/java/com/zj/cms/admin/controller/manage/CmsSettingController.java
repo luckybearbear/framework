@@ -1,14 +1,15 @@
-package com.zj.cms.admin.controller;
+package com.zj.cms.admin.controller.manage;
 
 import com.baidu.unbiz.fluentvalidator.ComplexResult;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
 import com.baidu.unbiz.fluentvalidator.ResultCollectors;
 import com.zj.cms.common.constant.CmsResult;
 import com.zj.cms.common.constant.CmsResultConstant;
-import com.zj.cms.dao.model.CmsTopic;
-import com.zj.cms.dao.model.CmsTopicExample;
-import com.zj.cms.rpc.api.CmsTopicService;
+import com.zj.cms.dao.model.CmsSetting;
+import com.zj.cms.dao.model.CmsSettingExample;
+import com.zj.cms.rpc.api.CmsSettingService;
 import com.zj.common.base.BaseController;
+import com.zj.common.util.StringUtil;
 import com.zj.common.validator.LengthValidator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,28 +27,28 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 专题控制器
+ * 设置控制器
  * Created by zj
  */
 @Controller
-@Api(value = "专题管理", description = "专题管理")
-@RequestMapping("/manage/topic")
-public class CmsTopicController extends BaseController {
+@Api(value = "设置管理", description = "设置管理")
+@RequestMapping("/manage/setting")
+public class CmsSettingController extends BaseController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CmsTopicController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CmsSettingController.class);
 	
 	@Autowired
-	private CmsTopicService cmsTopicService;
+	private CmsSettingService cmsSettingService;
 
 	@ApiOperation(value = "评论首页")
-	@RequiresPermissions("cms:topic:read")
+	@RequiresPermissions("cms:setting:read")
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index() {
-		return "/manage/topic/index.jsp";
+		return "/manage/setting/index.jsp";
 	}
 
 	@ApiOperation(value = "评论列表")
-	@RequiresPermissions("cms:topic:read")
+	@RequiresPermissions("cms:setting:read")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	public Object list(
@@ -55,75 +56,73 @@ public class CmsTopicController extends BaseController {
 			@RequestParam(required = false, defaultValue = "10", value = "limit") int limit,
 			@RequestParam(required = false, value = "sort") String sort,
 			@RequestParam(required = false, value = "order") String order) {
-		CmsTopicExample cmsTopicExample = new CmsTopicExample();
+		CmsSettingExample cmsSettingExample = new CmsSettingExample();
 		if (!StringUtils.isBlank(sort) && !StringUtils.isBlank(order)) {
-			cmsTopicExample.setOrderByClause(sort + " " + order);
+			cmsSettingExample.setOrderByClause(StringUtil.humpToLine(sort) + " " + order);
 		}
-		List<CmsTopic> rows = cmsTopicService.selectByExampleForOffsetPage(cmsTopicExample, offset, limit);
-		long total = cmsTopicService.countByExample(cmsTopicExample);
+		List<CmsSetting> rows = cmsSettingService.selectByExampleForOffsetPage(cmsSettingExample, offset, limit);
+		long total = cmsSettingService.countByExample(cmsSettingExample);
 		Map<String, Object> result = new HashMap<>(2);
 		result.put("rows", rows);
 		result.put("total", total);
 		return result;
 	}
 
-	@ApiOperation(value = "新增专题")
-	@RequiresPermissions("cms:topic:create")
+	@ApiOperation(value = "新增设置")
+	@RequiresPermissions("cms:setting:create")
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create() {
-		return "/manage/topic/create.jsp";
+		return "/manage/setting/create.jsp";
 	}
 
-	@ApiOperation(value = "新增专题")
-	@RequiresPermissions("cms:topic:create")
+	@ApiOperation(value = "新增设置")
+	@RequiresPermissions("cms:setting:create")
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	@ResponseBody
-	public Object create(CmsTopic cmsTopic) {
+	public Object create(CmsSetting cmsSetting) {
 		ComplexResult result = FluentValidator.checkAll()
-				.on(cmsTopic.getTitle(), new LengthValidator(1, 100, "标题"))
+				.on(cmsSetting.getSettingKey(), new LengthValidator(1, 20, "键"))
 				.doValidate()
 				.result(ResultCollectors.toComplex());
 		if (!result.isSuccess()) {
 			return new CmsResult(CmsResultConstant.INVALID_LENGTH, result.getErrors());
 		}
-		long time = System.currentTimeMillis();
-		cmsTopic.setCtime(time);
-		int count = cmsTopicService.insertSelective(cmsTopic);
+		int count = cmsSettingService.insertSelective(cmsSetting);
 		return new CmsResult(CmsResultConstant.SUCCESS, count);
 	}
 
-	@ApiOperation(value = "删除专题")
-	@RequiresPermissions("cms:topic:delete")
+	@ApiOperation(value = "删除设置")
+	@RequiresPermissions("cms:setting:delete")
 	@RequestMapping(value = "/delete/{ids}",method = RequestMethod.GET)
 	@ResponseBody
 	public Object delete(@PathVariable("ids") String ids) {
-		int count = cmsTopicService.deleteByPrimaryKeys(ids);
+		int count = cmsSettingService.deleteByPrimaryKeys(ids);
 		return new CmsResult(CmsResultConstant.SUCCESS, count);
 	}
 
-	@ApiOperation(value = "修改专题")
-	@RequiresPermissions("cms:topic:update")
+	@ApiOperation(value = "修改设置")
+	@RequiresPermissions("cms:setting:update")
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String update(@PathVariable("id") int id, ModelMap modelMap) {
-		CmsTopic topic = cmsTopicService.selectByPrimaryKey(id);
-		modelMap.put("topic", topic);
-		return "/manage/topic/update.jsp";
+		CmsSetting setting = cmsSettingService.selectByPrimaryKey(id);
+		modelMap.put("setting", setting);
+		return "/manage/setting/update.jsp";
 	}
 
-	@ApiOperation(value = "修改专题")
-	@RequiresPermissions("cms:topic:update")
+	@ApiOperation(value = "修改设置")
+	@RequiresPermissions("cms:setting:update")
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Object update(@PathVariable("id") int id, CmsTopic cmsTopic) {
+	public Object update(@PathVariable("id") int id, CmsSetting cmsSetting) {
 		ComplexResult result = FluentValidator.checkAll()
-				.on(cmsTopic.getTitle(), new LengthValidator(1, 100, "标题"))
+				.on(cmsSetting.getSettingKey(), new LengthValidator(1, 20, "键"))
 				.doValidate()
 				.result(ResultCollectors.toComplex());
 		if (!result.isSuccess()) {
 			return new CmsResult(CmsResultConstant.INVALID_LENGTH, result.getErrors());
 		}
-		cmsTopic.setTopicId(id);
-		int count = cmsTopicService.updateByPrimaryKeySelective(cmsTopic);
+		cmsSetting.setSettingId(id);
+		int count = cmsSettingService.updateByPrimaryKeySelective(cmsSetting);
 		return new CmsResult(CmsResultConstant.SUCCESS, count);
 	}
 

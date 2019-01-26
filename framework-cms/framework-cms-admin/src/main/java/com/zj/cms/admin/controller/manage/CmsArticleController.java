@@ -1,4 +1,4 @@
-package com.zj.cms.admin.controller;
+package com.zj.cms.admin.controller.manage;
 
 import com.baidu.unbiz.fluentvalidator.ComplexResult;
 import com.baidu.unbiz.fluentvalidator.FluentValidator;
