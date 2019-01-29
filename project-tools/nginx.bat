@@ -5,7 +5,7 @@ echo ==================begin========================
 
 cls 
 SET NGINX_PATH=E:
-SET NGINX_DIR=E:\zj\myProject\nginx-1.12.2-framework-cms\
+SET NGINX_DIR=E:\zj\myProject\nginx-1.12.2-framework\
 color 0a 
 TITLE framework-tools Power
 
