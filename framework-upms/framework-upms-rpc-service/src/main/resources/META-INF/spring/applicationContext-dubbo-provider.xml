@@ -58,5 +58,7 @@
     <!-- 接口服务 -->
     <bean id="upmsApiService" class="com.zj.upms.rpc.service.impl.UpmsApiServiceImpl"/>
     <dubbo:service interface="com.zj.upms.rpc.api.UpmsApiService" ref="upmsApiService" timeout="10000"/>
-
+    <!--公司-->
+    <bean id="upmsCompanyService" class="com.zj.upms.rpc.service.impl.UpmsCompanyServiceImpl"/>
+    <dubbo:service interface="com.zj.upms.rpc.api.UpmsCompanyService" ref="upmsCompanyService" timeout="10000"/>
 </beans>

@@ -395,14 +395,7 @@ ${upmsSystem.name}
                         </div>
                         <p class="app-name"><a href="javascript:void(0)" class="switch-systems" systemid="2" systemname="activiti-web" systemtitle="内容管理">内容管理</a></p>
                     </li>
-                    <li>
-                        <div class="app-img">
-                            <a href="javascript:void(0)" class="switch-systems" systemid="3" systemname="activiti-web" systemtitle="支付系统">
-                                <img src="${basePath}/resources/framework-admin/images/zheng-pay.png" width="72" height="72">
-                            </a>
-                        </div>
-                        <p class="app-name"><a href="javascript:void(0)" class="switch-systems" systemid="3" systemname="activiti-web" systemtitle="支付系统">支付系统</a></p>
-                    </li>
+
                     <li>
                         <div class="app-img">
                             <a href="javascript:void(0)" class="switch-systems" systemid="4" systemname="activiti-web" systemtitle="用户管理系统">

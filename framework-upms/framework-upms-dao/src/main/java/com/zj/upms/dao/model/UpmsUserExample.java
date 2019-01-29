@@ -836,6 +836,66 @@ public class UpmsUserExample implements Serializable {
             addCriterion("ctime not between", value1, value2, "ctime");
             return (Criteria) this;
         }
+
+        public Criteria andCompanyidIsNull() {
+            addCriterion("companyId is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyidIsNotNull() {
+            addCriterion("companyId is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyidEqualTo(Integer value) {
+            addCriterion("companyId =", value, "companyid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyidNotEqualTo(Integer value) {
+            addCriterion("companyId <>", value, "companyid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyidGreaterThan(Integer value) {
+            addCriterion("companyId >", value, "companyid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("companyId >=", value, "companyid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyidLessThan(Integer value) {
+            addCriterion("companyId <", value, "companyid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyidLessThanOrEqualTo(Integer value) {
+            addCriterion("companyId <=", value, "companyid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyidIn(List<Integer> values) {
+            addCriterion("companyId in", values, "companyid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyidNotIn(List<Integer> values) {
+            addCriterion("companyId not in", values, "companyid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyidBetween(Integer value1, Integer value2) {
+            addCriterion("companyId between", value1, value2, "companyid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyidNotBetween(Integer value1, Integer value2) {
+            addCriterion("companyId not between", value1, value2, "companyid");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria implements Serializable {

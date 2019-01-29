@@ -6,9 +6,11 @@ import org.apache.shiro.session.InvalidSessionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * 控制器基类
@@ -19,6 +21,18 @@ public abstract class BaseController {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
 
+	protected HttpServletRequest request;
+	protected HttpServletResponse response;
+	protected HttpSession session;
+	public BaseController() {
+	}
+
+	@ModelAttribute
+	public void setControllerContext(HttpServletRequest request, HttpServletResponse response) {
+		this.request = request;
+		this.response = response;
+		this.session = request.getSession();
+	}
 	/**
 	 * 统一异常处理
 	 * @param request

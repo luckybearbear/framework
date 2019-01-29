@@ -1,5 +1,6 @@
 package com.zj.upms.client.shiro.session;
 
+import com.zj.upms.dao.model.UpmsUser;
 import org.apache.shiro.session.mgt.SimpleSession;
 
 /**
@@ -37,7 +38,8 @@ public class UpmsSession extends SimpleSession {
 
     // 用户浏览器类型
     private String userAgent;
-
+    //用户信息
+    private UpmsUser userInfo;
     // 在线状态
     private OnlineStatus status = OnlineStatus.off_line;
 
@@ -55,6 +57,12 @@ public class UpmsSession extends SimpleSession {
 
     public void setStatus(OnlineStatus status) {
         this.status = status;
+    }
+    public UpmsUser getUserInfo() {
+        return userInfo;
+    }
+    public void setUserInfo(UpmsUser userInfo) {
+        this.userInfo = userInfo;
     }
 
 }

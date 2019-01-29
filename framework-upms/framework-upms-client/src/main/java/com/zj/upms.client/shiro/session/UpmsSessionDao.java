@@ -3,6 +3,7 @@ package com.zj.upms.client.shiro.session;
 import com.zj.common.util.RedisUtil;
 import com.zj.upms.client.util.SerializableUtil;
 import com.zj.upms.common.constant.UpmsConstant;
+import com.zj.upms.dao.model.UpmsUser;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.ValidatingSession;
@@ -150,6 +151,18 @@ public class UpmsSessionDao extends CachingSessionDAO {
             RedisUtil.set(FRAMEWORK_UPMS_SHIRO_SESSION_ID + "_" + sessionId, SerializableUtil.serialize(upmsSession), (int) upmsSession.getTimeout() / 1000);
         }
         return sessionIds.length;
+    }
+    /**
+     * 获取当前会话用户信息
+     *
+     * @return
+     */
+    public UpmsUser getUserInfo(Serializable sessionId) {
+        UpmsSession session = (UpmsSession) doReadSession(sessionId);
+        if (null == session) {
+            return null;
+        }
+        return session.getUserInfo();
     }
 
     /**
