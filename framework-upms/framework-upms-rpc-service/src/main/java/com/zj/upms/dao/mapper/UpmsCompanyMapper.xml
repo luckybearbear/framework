@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zj.upms.dao.mapper.UpmsCompanyMapper">
+  <resultMap id="BaseResultMap" type="com.zj.upms.dao.model.UpmsCompany">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="companyName" jdbcType="VARCHAR" property="companyname" />
+    <result column="companyCode" jdbcType="VARCHAR" property="companycode" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="rate" jdbcType="DOUBLE" property="rate" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="website" jdbcType="VARCHAR" property="website" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="ctime" jdbcType="BIGINT" property="ctime" />
+    <result column="companyType" jdbcType="INTEGER" property="companytype" />
+    <result column="logo" jdbcType="VARCHAR" property="logo" />
+    <result column="engAbbreviate" jdbcType="VARCHAR" property="engabbreviate" />
+    <result column="checkTime" jdbcType="BIGINT" property="checktime" />
+    <result column="dueDate" jdbcType="BIGINT" property="duedate" />
+    <result column="siteIndex" jdbcType="VARCHAR" property="siteindex" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, company, companyName, companyCode, location, rate, phone, fax, website, type, 
+    status, address, description, ctime, companyType, logo, engAbbreviate, checkTime, 
+    dueDate, siteIndex
+  </sql>
+  <select id="selectByExample" parameterType="com.zj.upms.dao.model.UpmsCompanyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from upms_company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from upms_company
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from upms_company
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zj.upms.dao.model.UpmsCompanyExample">
+    delete from upms_company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zj.upms.dao.model.UpmsCompany">
+    insert into upms_company (id, company, companyName, 
+      companyCode, location, rate, 
+      phone, fax, website, 
+      type, status, address, 
+      description, ctime, companyType, 
+      logo, engAbbreviate, checkTime, 
+      dueDate, siteIndex)
+    values (#{id,jdbcType=INTEGER}, #{company,jdbcType=VARCHAR}, #{companyname,jdbcType=VARCHAR}, 
+      #{companycode,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{rate,jdbcType=DOUBLE}, 
+      #{phone,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{ctime,jdbcType=BIGINT}, #{companytype,jdbcType=INTEGER}, 
+      #{logo,jdbcType=VARCHAR}, #{engabbreviate,jdbcType=VARCHAR}, #{checktime,jdbcType=BIGINT}, 
+      #{duedate,jdbcType=BIGINT}, #{siteindex,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zj.upms.dao.model.UpmsCompany">
+    insert into upms_company
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="companyname != null">
+        companyName,
+      </if>
+      <if test="companycode != null">
+        companyCode,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="rate != null">
+        rate,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="fax != null">
+        fax,
+      </if>
+      <if test="website != null">
+        website,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="companytype != null">
+        companyType,
+      </if>
+      <if test="logo != null">
+        logo,
+      </if>
+      <if test="engabbreviate != null">
+        engAbbreviate,
+      </if>
+      <if test="checktime != null">
+        checkTime,
+      </if>
+      <if test="duedate != null">
+        dueDate,
+      </if>
+      <if test="siteindex != null">
+        siteIndex,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null">
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="companycode != null">
+        #{companycode,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null">
+        #{rate,jdbcType=DOUBLE},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=BIGINT},
+      </if>
+      <if test="companytype != null">
+        #{companytype,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null">
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="engabbreviate != null">
+        #{engabbreviate,jdbcType=VARCHAR},
+      </if>
+      <if test="checktime != null">
+        #{checktime,jdbcType=BIGINT},
+      </if>
+      <if test="duedate != null">
+        #{duedate,jdbcType=BIGINT},
+      </if>
+      <if test="siteindex != null">
+        #{siteindex,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zj.upms.dao.model.UpmsCompanyExample" resultType="java.lang.Long">
+    select count(*) from upms_company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update upms_company
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.company != null">
+        company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyname != null">
+        companyName = #{record.companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companycode != null">
+        companyCode = #{record.companycode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rate != null">
+        rate = #{record.rate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fax != null">
+        fax = #{record.fax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.website != null">
+        website = #{record.website,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
+        ctime = #{record.ctime,jdbcType=BIGINT},
+      </if>
+      <if test="record.companytype != null">
+        companyType = #{record.companytype,jdbcType=INTEGER},
+      </if>
+      <if test="record.logo != null">
+        logo = #{record.logo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.engabbreviate != null">
+        engAbbreviate = #{record.engabbreviate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checktime != null">
+        checkTime = #{record.checktime,jdbcType=BIGINT},
+      </if>
+      <if test="record.duedate != null">
+        dueDate = #{record.duedate,jdbcType=BIGINT},
+      </if>
+      <if test="record.siteindex != null">
+        siteIndex = #{record.siteindex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update upms_company
+    set id = #{record.id,jdbcType=INTEGER},
+      company = #{record.company,jdbcType=VARCHAR},
+      companyName = #{record.companyname,jdbcType=VARCHAR},
+      companyCode = #{record.companycode,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      rate = #{record.rate,jdbcType=DOUBLE},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      fax = #{record.fax,jdbcType=VARCHAR},
+      website = #{record.website,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      ctime = #{record.ctime,jdbcType=BIGINT},
+      companyType = #{record.companytype,jdbcType=INTEGER},
+      logo = #{record.logo,jdbcType=VARCHAR},
+      engAbbreviate = #{record.engabbreviate,jdbcType=VARCHAR},
+      checkTime = #{record.checktime,jdbcType=BIGINT},
+      dueDate = #{record.duedate,jdbcType=BIGINT},
+      siteIndex = #{record.siteindex,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zj.upms.dao.model.UpmsCompany">
+    update upms_company
+    <set>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null">
+        companyName = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="companycode != null">
+        companyCode = #{companycode,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null">
+        rate = #{rate,jdbcType=DOUBLE},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=BIGINT},
+      </if>
+      <if test="companytype != null">
+        companyType = #{companytype,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null">
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="engabbreviate != null">
+        engAbbreviate = #{engabbreviate,jdbcType=VARCHAR},
+      </if>
+      <if test="checktime != null">
+        checkTime = #{checktime,jdbcType=BIGINT},
+      </if>
+      <if test="duedate != null">
+        dueDate = #{duedate,jdbcType=BIGINT},
+      </if>
+      <if test="siteindex != null">
+        siteIndex = #{siteindex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zj.upms.dao.model.UpmsCompany">
+    update upms_company
+    set company = #{company,jdbcType=VARCHAR},
+      companyName = #{companyname,jdbcType=VARCHAR},
+      companyCode = #{companycode,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      rate = #{rate,jdbcType=DOUBLE},
+      phone = #{phone,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=BIGINT},
+      companyType = #{companytype,jdbcType=INTEGER},
+      logo = #{logo,jdbcType=VARCHAR},
+      engAbbreviate = #{engabbreviate,jdbcType=VARCHAR},
+      checkTime = #{checktime,jdbcType=BIGINT},
+      dueDate = #{duedate,jdbcType=BIGINT},
+      siteIndex = #{siteindex,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>
