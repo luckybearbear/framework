@@ -85,7 +85,7 @@ public class UpmsUser implements Serializable {
      *
      * @mbg.generated
      */
-    private Integer companyid;
+    private Integer companyId;
 
     private static final long serialVersionUID = 1L;
 
@@ -177,12 +177,12 @@ public class UpmsUser implements Serializable {
         this.ctime = ctime;
     }
 
-    public Integer getCompanyid() {
-        return companyid;
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public void setCompanyid(Integer companyid) {
-        this.companyid = companyid;
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     @Override
@@ -202,7 +202,7 @@ public class UpmsUser implements Serializable {
         sb.append(", sex=").append(sex);
         sb.append(", locked=").append(locked);
         sb.append(", ctime=").append(ctime);
-        sb.append(", companyid=").append(companyid);
+        sb.append(", companyId=").append(companyId);
         sb.append("]");
         return sb.toString();
     }
@@ -230,7 +230,7 @@ public class UpmsUser implements Serializable {
             && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
             && (this.getLocked() == null ? other.getLocked() == null : this.getLocked().equals(other.getLocked()))
             && (this.getCtime() == null ? other.getCtime() == null : this.getCtime().equals(other.getCtime()))
-            && (this.getCompanyid() == null ? other.getCompanyid() == null : this.getCompanyid().equals(other.getCompanyid()));
+            && (this.getCompanyId() == null ? other.getCompanyId() == null : this.getCompanyId().equals(other.getCompanyId()));
     }
 
     @Override
@@ -248,7 +248,7 @@ public class UpmsUser implements Serializable {
         result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
         result = prime * result + ((getLocked() == null) ? 0 : getLocked().hashCode());
         result = prime * result + ((getCtime() == null) ? 0 : getCtime().hashCode());
-        result = prime * result + ((getCompanyid() == null) ? 0 : getCompanyid().hashCode());
+        result = prime * result + ((getCompanyId() == null) ? 0 : getCompanyId().hashCode());
         return result;
     }
 }

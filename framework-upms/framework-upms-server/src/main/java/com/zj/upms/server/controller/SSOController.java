@@ -9,6 +9,8 @@ import com.zj.upms.common.constant.UpmsResult;
 import com.zj.upms.common.constant.UpmsResultConstant;
 import com.zj.upms.dao.model.UpmsSystem;
 import com.zj.upms.dao.model.UpmsSystemExample;
+import com.zj.upms.dao.model.UpmsUser;
+import com.zj.upms.rpc.api.UpmsApiService;
 import com.zj.upms.rpc.api.UpmsSystemService;
 import com.zj.upms.rpc.api.UpmsUserService;
 import io.swagger.annotations.Api;
@@ -52,6 +54,10 @@ public class SSOController extends BaseController {
     private final static String FRAMEWORK_UPMS_SERVER_SESSION_IDS = "framework-upms-server-session-ids";
     // code key
     private final static String FRAMEWORK_UPMS_SERVER_CODE = "framework-upms-server-code";
+    // 用户信息唯一标识
+    private final static String FRAMEWORK_UPMS_SERVER_STATUS= "framework-upms-server-status";
+    // 公司信息唯一标识
+    private final static String FRAMEWORK_UPMS_COMPANY_STATUS= "framework-upms-company-status";
 
     @Autowired
     UpmsSystemService upmsSystemService;
@@ -61,6 +67,8 @@ public class SSOController extends BaseController {
 
     @Autowired
     UpmsSessionDao upmsSessionDao;
+    @Autowired
+    UpmsApiService upmsApiService;
 
     @ApiOperation(value = "认证中心首页")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -129,6 +137,7 @@ public class SSOController extends BaseController {
         String hasCode = RedisUtil.get(FRAMEWORK_UPMS_SERVER_SESSION_ID + "_" + sessionId);
         // code校验值
         if (StringUtils.isBlank(hasCode)) {
+            UpmsUser upmsUser = upmsApiService.selectUpmsUserByUsername(username);
             // 使用shiro认证
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, password);
             try {
@@ -155,6 +164,10 @@ public class SSOController extends BaseController {
             RedisUtil.set(FRAMEWORK_UPMS_SERVER_SESSION_ID + "_" + sessionId, code, (int) subject.getSession().getTimeout() / 1000);
             // code校验值
             RedisUtil.set(FRAMEWORK_UPMS_SERVER_CODE + "_" + code, code, (int) subject.getSession().getTimeout() / 1000);
+            // 全局用户信息
+            RedisUtil.set(FRAMEWORK_UPMS_SERVER_STATUS + "_" + upmsUser.getUserId(), sessionId, (int) subject.getSession().getTimeout() / 1000);
+            // 全局公司信息
+            RedisUtil.lpush(FRAMEWORK_UPMS_COMPANY_STATUS + "_" + upmsUser.getCompanyId(), upmsUser.getUserId().toString());
         }
         // 回跳登录前地址
         String backurl = request.getParameter("backurl");

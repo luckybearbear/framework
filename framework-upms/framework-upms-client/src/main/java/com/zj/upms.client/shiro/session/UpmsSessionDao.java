@@ -4,12 +4,16 @@ import com.zj.common.util.RedisUtil;
 import com.zj.upms.client.util.SerializableUtil;
 import com.zj.upms.common.constant.UpmsConstant;
 import com.zj.upms.dao.model.UpmsUser;
+import com.zj.upms.rpc.api.UpmsApiService;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.ValidatingSession;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 
 import java.io.Serializable;
@@ -34,6 +38,8 @@ public class UpmsSessionDao extends CachingSessionDAO {
     private final static String FRAMEWORK_UPMS_CLIENT_SESSION_ID = "framework-upms-client-session-id";
     // 单点同一个code所有局部会话key
     private final static String FRAMEWORK_UPMS_CLIENT_SESSION_IDS = "framework-upms-client-session-ids";
+    @Autowired
+    private UpmsApiService upmsApiService;
 
     @Override
     protected Serializable doCreate(Session session) {
@@ -63,6 +69,16 @@ public class UpmsSessionDao extends CachingSessionDAO {
         if (null != cacheUpmsSession) {
             upmsSession.setStatus(cacheUpmsSession.getStatus());
             upmsSession.setAttribute("FORCE_LOGOUT", cacheUpmsSession.getAttribute("FORCE_LOGOUT"));
+
+            //
+            PrincipalCollection principalCollection = (PrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+            if (null != principalCollection && null == upmsSession.getUserInfo()) {
+                UpmsUser upmsUser = upmsApiService.selectUpmsUserByUsername(String.valueOf(principalCollection.getPrimaryPrincipal()));
+                //为了安全考虑，过滤用户密码相关信息
+                upmsUser.setPassword(null);
+                upmsUser.setSalt(null);
+                upmsSession.setUserInfo(upmsUser);
+            }
         }
         RedisUtil.set(FRAMEWORK_UPMS_SHIRO_SESSION_ID + "_" + session.getId(), SerializableUtil.serialize(session), (int) session.getTimeout() / 1000);
         // 更新FRAMEWORK_UPMS_SERVER_SESSION_ID、FRAMEWORK_UPMS_SERVER_CODE过期时间 TODO

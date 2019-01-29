@@ -1,6 +1,7 @@
 package com.zj.upms.server.controller;
 
 import com.zj.common.base.BaseController;
+import com.zj.upms.client.shiro.session.UpmsSessionDao;
 import com.zj.upms.dao.model.*;
 import com.zj.upms.rpc.api.UpmsApiService;
 import com.zj.upms.rpc.api.UpmsSystemService;
@@ -34,10 +35,14 @@ public class ManageController extends BaseController {
 
 	@Autowired
 	private UpmsApiService upmsApiService;
+	@Autowired
+	private UpmsSessionDao upmsSessionDao;
 
 	@ApiOperation(value = "后台首页")
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index(ModelMap modelMap) {
+		UpmsUser upmsUser = upmsSessionDao.getUserInfo(session.getId());
+		LOGGER.info("当前SessionDao中用户 name="+upmsUser.getRealname());
 		// 已注册系统
 		UpmsSystemExample upmsSystemExample = new UpmsSystemExample();
 		upmsSystemExample.createCriteria()
@@ -47,7 +52,6 @@ public class ManageController extends BaseController {
 		// 当前登录用户权限
 		Subject subject = SecurityUtils.getSubject();
 		String username = (String) subject.getPrincipal();
-		UpmsUser upmsUser = upmsApiService.selectUpmsUserByUsername(username);
 		List<UpmsPermission> upmsPermissions = upmsApiService.selectUpmsPermissionByUpmsUserId(upmsUser.getUserId());
 		modelMap.put("upmsPermissions", upmsPermissions);
 		return "/manage/index.jsp";
